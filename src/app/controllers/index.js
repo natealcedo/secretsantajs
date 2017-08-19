@@ -1,4 +1,6 @@
-const createGroup = () => {};
+const createGroup = () => {
+  console.log("called createdgroup");
+};
 const addUserToGroup = () => {};
 const removeUserFromGroup = () => {};
 const assignGiftRecipient = () => {};
@@ -8,12 +10,14 @@ const setEndDate = () => {};
 const userList = () => {};
 
 export default {
-  createGroup,
-  addUserToGroup,
-  removeUserFromGroup,
-  assignGiftRecipient,
-  giftRecipientList,
-  endDate,
-  setEndDate,
-  userList,
+  telegram: {
+    createGroup,
+    addUserToGroup,
+    removeUserFromGroup,
+    assignGiftRecipient,
+    giftRecipientList,
+    endDate,
+    setEndDate,
+    userList,
+  },
 };
