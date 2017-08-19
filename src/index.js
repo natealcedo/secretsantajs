@@ -1,1 +1,3 @@
-console.log("cool shit");
+import app from "./app";
+
+app.start();
