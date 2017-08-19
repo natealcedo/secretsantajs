@@ -1,3 +1,5 @@
-import logger from "winston";
+import winston from "winston";
 
-export default logger();
+const logger = winston;
+
+export default logger;
