@@ -3,18 +3,8 @@
   "version": "0.0.1",
   "description": "A reusable interface between nodejs and different messaging services.",
   "main": "index.js",
-  "scripts": {
-    "test": "NODE_ENV=development mocha -w --recursive --compilers js:babel-core/register",
-    "build": "npm run clean && babel src -s -d build",
-    "clean": "rm -rf build/",
-    "dev": "  NODE_ENV=development nodemon --watch src --exec babel-node ./src/index.js logging_level=info",
-    "precommit": "lint-staged",
-    "start": "npm run build && NODE_ENV=production node ./build/index.js",
-    "staging": ""
-  },
-  "lint-staged": {
-    "*.js": ["prettier --write --trailing-comma all", "eslint --fix", "git add"]
-  },
+  "author": "Nathaniel D Alcedo Jr",
+  "license": "MIT",
   "keywords": [
     "secret",
     "santa",
@@ -23,8 +13,30 @@
     "facebook",
     "twillio"
   ],
-  "author": "Nathaniel D Alcedo Jr",
-  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && npm run cleansymlink && npm run symlinkproduction && babel src -s -d build",
+    "clean": "rm -rf build/",
+    "cleansymlink": "cd node_modules && rm app lib config.js || true",
+    "dev": "  NODE_ENV=development nodemon --watch src --exec babel-node ./src/index.js logging_level=info",
+    "precommit": "lint-staged",
+    "predev": "npm run cleansymlink && npm run symlinkdev",
+    "staging": "npm run build && NODE_ENV=production pm2 start ./build/index.js",
+    "start": "npm run build && NODE_ENV=production node ./build/index.js",
+    "symlinkdev": "cd node_modules && ln -nsf ../src/app && ln -nsf ../src/config.js && ln -nsf ../src/lib",
+    "symlinkproduction": "cd node_modules && ln -nsf ../build/app && ln -nsf ../build/config.js && ln -nsf ../build/lib",
+    "test": "NODE_ENV=development mocha -w --recursive --compilers js:babel-core/register"
+  },
+  "lint-staged": {
+    "*.js": ["prettier --write --trailing-comma all", "eslint --fix", "git add"]
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "pm2": "^2.6.1",
+    "regenerator-runtime": "^0.11.0"
+  },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "chai": "^4.1.1",
@@ -36,12 +48,5 @@
     "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.5.3"
-  },
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "regenerator-runtime": "^0.11.0"
   }
 }
