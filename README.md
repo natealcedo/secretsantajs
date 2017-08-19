@@ -1,0 +1,8 @@
+/start "createGroup"
+/join "addUserToGroup"
+/leave "removeUserFromGroup"
+/generate "assignGiftRecipient"
+/reveal "giftRecipientList"
+/deadline "endDate"
+/setdeadline "setEndDate"
+/participants "userList"
