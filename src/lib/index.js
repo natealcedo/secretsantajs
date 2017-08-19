@@ -1,5 +1,6 @@
 import mongo from "./mongo";
+import utils from "./utils";
 
-export { mongo };
+export { mongo, utils };
 
-export default { mongo };
+export default { mongo, utils };
