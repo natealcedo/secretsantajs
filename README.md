@@ -1,8 +1,10 @@
-/start "createGroup"
-/join "addUserToGroup"
-/leave "removeUserFromGroup"
-/generate "assignGiftRecipient"
-/reveal "giftRecipientList"
-/deadline "endDate"
-/setdeadline "setEndDate"
-/participants "userList"
+# Possible routes
+
+### /deadline "endDate"
+### /generate "assignGiftRecipient"
+### /join "addUserToGroup"
+### /leave "removeUserFromGroup"
+### /participants "userList"
+### /reveal "giftRecipientList"
+### /setdeadline "setEndDate"
+### /start "createGroup"
