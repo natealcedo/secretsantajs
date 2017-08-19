@@ -1,3 +1,5 @@
-import app from "./app";
+import mongo from "./mongo";
 
-app.start();
+export { mongo };
+
+export default { mongo };
