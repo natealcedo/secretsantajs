@@ -21,7 +21,7 @@
     "precommit": "lint-staged",
     "predev": "npm run cleansymlink && npm run symlinkdev",
     "staging": "npm run build && NODE_ENV=production pm2 start ./build/index.js",
-    "start": "npm run build && NODE_ENV=production pm2 ./build/index.js",
+    "start": "npm run build && NODE_ENV=production pm2 start ./build/index.js",
     "symlinkdev": "cd node_modules && ln -nsf ../src/app && ln -nsf ../src/config.js && ln -nsf ../src/lib",
     "symlinkproduction": "cd node_modules && ln -nsf ../build/app && ln -nsf ../build/config.js && ln -nsf ../build/lib",
     "test": "NODE_ENV=development mocha -w --recursive --compilers js:babel-core/register"
