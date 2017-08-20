@@ -1,9 +1,10 @@
-const PORT = process.env.PORT;
-const ROOT_MONGO_CONNECTION =
+export const PORT = process.env.PORT;
+export const ROOT_MONGO_CONNECTION =
   process.env.NODE_ENV !== "production"
     ? "mongodb://localhost:27017/secretsantajs"
     : process.env.MONGO;
-const TELEBOT_CONFIG = {
+
+export const TELEBOT_CONFIG = {
   token: process.env.TELEGRAM_TOKEN, // Required. Telegram Bot API token.
   polling: {
     // Optional. Use polling.
