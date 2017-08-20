@@ -1,23 +1,7 @@
-const createGroup = () => {
-  console.log("called createdgroup");
-};
-const addUserToGroup = () => {};
-const removeUserFromGroup = () => {};
-const assignGiftRecipient = () => {};
-const giftRecipientList = () => {};
-const endDate = () => {};
-const setEndDate = () => {};
-const userList = () => {};
+import telegram from "./telegram";
+
+export { telegram };
 
 export default {
-  telegram: {
-    createGroup,
-    addUserToGroup,
-    removeUserFromGroup,
-    assignGiftRecipient,
-    giftRecipientList,
-    endDate,
-    setEndDate,
-    userList,
-  },
+  telegram,
 };
