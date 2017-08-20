@@ -5,6 +5,7 @@
 /**
  * generateRandomFunction
  *
+ * @private
  * @param {Number} lowerBound Lower bound of random number generator.
  * @param {Number} upperBound Upper bound of number generator.
  * @returns {Number} Random integer number inclusive between lowerBound and upperBound.
