@@ -1,4 +1,4 @@
-import ROOT_MONGO from "./mongoConnnection";
+import ROOT_MONGO from "./rootMongoConnection";
 
 export { ROOT_MONGO };
 
