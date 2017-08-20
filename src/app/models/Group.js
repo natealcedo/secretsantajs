@@ -1,18 +1,28 @@
-import ROOT_MONGO from "lib/mongo";
+import { ROOT_MONGO } from "lib/mongo";
 import mongoose, { Schema } from "mongoose";
+import Promise from "bluebird";
+import { userSchema } from "./User";
 
-const GroupSchema = new Schema(
+mongoose.Promise = Promise;
+
+export const groupSchema = new Schema(
   {
-    _createdBy: {
-      ref: "User",
+    platform: {
+      type: String,
       required: true,
-      type: Schema.Types.ObjectId,
+      enum: ["facebook", "telegram", "slack"],
     },
+    identifier: {
+      type: String,
+      required: true,
+    },
+    _users: [userSchema],
+    _createdBy: userSchema,
   },
   {
     timestamps: true,
   },
 );
 
-const Group = ROOT_MONGO.model("Group", GroupSchema);
+const Group = ROOT_MONGO.model("Group", groupSchema);
 export default Group;
