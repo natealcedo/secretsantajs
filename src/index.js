@@ -1,4 +1,4 @@
-import app from "./app";
+import { telegram } from "./app/interfaces";
 import "regenerator-runtime/runtime";
 
-app.start();
+telegram.start();
