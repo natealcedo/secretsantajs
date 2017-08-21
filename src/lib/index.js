@@ -1,7 +1,7 @@
 import mongo from "./mongo";
 import utils from "./utils";
-import ERROR from "./errors";
+import errors from "./errors";
 
-export { mongo, utils, ERROR };
+export { mongo, utils, errors };
 
-export default { mongo, utils, ERROR };
+export default { mongo, utils, errors };

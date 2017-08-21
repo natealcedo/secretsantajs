@@ -3,7 +3,7 @@ const GROUP_ALREADY_EXISTS = new Error(
 );
 GROUP_ALREADY_EXISTS.name = "GroupAlreadyExists";
 
-const ERROR = {
+const errors = {
   GROUP_ALREADY_EXISTS,
 };
-export default ERROR;
+export default errors;

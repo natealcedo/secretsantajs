@@ -1,12 +1,12 @@
 import Group from "app/models/Group";
 // import User from "app/models/User";
-import ERROR from "lib/errors";
+import errors from "lib/errors";
 
 const _createGroup = platform => async identifier => {
   try {
     const existingGroup = await Group.findOne({ platform, identifier });
     if (existingGroup) {
-      throw ERROR.GROUP_ALREADY_EXISTS;
+      throw errors.GROUP_ALREADY_EXISTS;
     }
     const newGroup = new Group({ platform, identifier });
     await newGroup.save();

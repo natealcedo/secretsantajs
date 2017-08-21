@@ -4,7 +4,7 @@ import { commandNotFound } from "lib/utils/responses";
 import { telegram as telegramRoutes } from "app/routes";
 import controller from "app/controllers";
 import { logger } from "lib/utils";
-import { ERROR } from "lib";
+import { errors } from "lib";
 
 const telegramBot = new TeleBot(process.env.TELEGRAM_TOKEN);
 
@@ -20,7 +20,7 @@ telegramBot.on("/start", async message => {
     );
   } catch (error) {
     switch (error) {
-      case ERROR.GROUP_ALREADY_EXISTS:
+      case errors.GROUP_ALREADY_EXISTS:
         message.reply.text(
           "The game has already been started! Type /join to participate.",
         );
