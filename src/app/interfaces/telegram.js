@@ -6,7 +6,7 @@ import _controller from "app/controllers";
 import { logger } from "lib/utils";
 import { errors } from "lib";
 
-// Expose platform to controller
+// Expose interface/platform to controller
 const INTERFACE = "telegram";
 const controller = Object.keys(_controller).reduce((acc, key) => {
   acc[key] = _controller[key](INTERFACE);
@@ -39,6 +39,16 @@ telegramBot.on("/join", async message => {
   }
 });
 
+telegramBot.on("/leave", async message => {
+  try {
+    await controller.removeUserFromGroup(message.from.id, message.chat.id);
+    const fullName = nameFromObject(message.from);
+    message.reply.text(LEAVE_GROUP_SUCCESS.replace("$0", fullName));
+  } catch (error) {
+    handleError(error, message);
+  }
+});
+
 telegramBot.on("/list", async message => {
   try {
     const userIdList = await controller.getUserList(message.chat.id);
@@ -46,12 +56,17 @@ telegramBot.on("/list", async message => {
       telegramBot.getChatMember(message.chat.id, userId),
     );
     const rawUsers = await Promise.all(userPromises);
+    // Send a different message if there are no participants.
+    if (rawUsers.length === 0) {
+      message.reply.text(NO_PARTICIPANTS);
+      return;
+    }
     const users = rawUsers.map(value => value.result.user);
     const fullNames = users.map(user => nameFromObject(user));
     const namesWithIndex = fullNames.map(
       (name, index) => `\n${index + 1}. ${name}`,
     );
-    message.reply.text(`Secret santa participants: ${namesWithIndex}`);
+    message.reply.text(LIST_PARTICIPANTS.replace("$0", namesWithIndex));
   } catch (error) {
     handleError(error, message);
   }
@@ -80,6 +95,10 @@ const nameFromObject = fromObject => {
 
 export default telegramBot;
 
+const NO_PARTICIPANTS =
+  "No one has joined the secret santa yet! Type /join to participate.";
+const LIST_PARTICIPANTS = "Secret santa participants: $0";
 const CREATE_GROUP_SUCCESS =
-  "Ho ho ho! A secret santa game has been started! Type /join to participate.";
-const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa game!";
+  "Ho ho ho! A secret santa has been started! Type /join to participate.";
+const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa.";
+const LEAVE_GROUP_SUCCESS = "$0 has left the secret santa.";
