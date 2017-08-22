@@ -15,17 +15,22 @@ telegramBot.on("start", () => {
 telegramBot.on("/start", async message => {
   try {
     await controller.createGroup("telegram")(message.chat.id);
-    message.reply.text(
-      "Ho ho ho! A secret santa game has been started! Type /join to participate.",
-    );
+    message.reply.text(CREATE_GROUP_SUCCESS);
   } catch (error) {
-    switch (error) {
-      case errors.GROUP_ALREADY_EXISTS:
-        message.reply.text(
-          "The game has already been started! Type /join to participate.",
-        );
-        break;
-    }
+    handleError(error, message);
+  }
+});
+
+telegramBot.on("/join", async message => {
+  try {
+    await controller.addUserToGroup("telegram")(
+      message.chat.id,
+      message.chat.id,
+    );
+    const fullName = nameFromObject(message.from);
+    message.reply.text(JOIN_GROUP_SUCCESS.replace("$0", fullName));
+  } catch (error) {
+    handleError(error, message);
   }
 });
 
@@ -52,4 +57,19 @@ message-received: ${message.text}
   // message.reply.text(message.text);
 });
 
+const handleError = (error, message) => {
+  message.reply.text(`ERROR ${error.name}: ${error.message}`);
+};
+
+const nameFromObject = fromObject => {
+  if (fromObject.last_name) {
+    return `${fromObject.first_name} ${fromObject.last_name}`;
+  }
+  return fromObject.first_name;
+};
+
 export default telegramBot;
+
+const CREATE_GROUP_SUCCESS =
+  "Ho ho ho! A secret santa game has been started! Type /join to participate.";
+const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa game!";
