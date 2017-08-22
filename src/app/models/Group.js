@@ -1,7 +1,6 @@
 import { ROOT_MONGO } from "lib/mongo";
 import mongoose, { Schema } from "mongoose";
 import Promise from "bluebird";
-import { userSchema } from "./User";
 
 mongoose.Promise = Promise;
 
@@ -16,8 +15,8 @@ export const groupSchema = new Schema(
       type: String,
       required: true,
     },
-    _users: [userSchema],
-    _createdBy: userSchema,
+    users: [String],
+    _createdBy: String,
   },
   {
     timestamps: true,
