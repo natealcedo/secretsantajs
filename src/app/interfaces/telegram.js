@@ -61,12 +61,23 @@ telegramBot.on("/list", async message => {
       message.reply.text(NO_PARTICIPANTS);
       return;
     }
+    // Get list of raw users, fetch names and list them.
     const users = rawUsers.map(value => value.result.user);
     const fullNames = users.map(user => nameFromObject(user));
     const namesWithIndex = fullNames.map(
       (name, index) => `\n${index + 1}. ${name}`,
     );
-    message.reply.text(LIST_PARTICIPANTS.replace("$0", namesWithIndex));
+    message.reply.text(
+      LIST_PARTICIPANTS.replace("$0", namesWithIndex.join("")),
+    );
+  } catch (error) {
+    handleError(error, message);
+  }
+});
+
+telegramBot.on("/shuffle", async message => {
+  try {
+    const receipients = await controller.assignGiftRecepients(message.chat.id);
   } catch (error) {
     handleError(error, message);
   }

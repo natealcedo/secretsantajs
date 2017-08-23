@@ -16,6 +16,7 @@ export const groupSchema = new Schema(
       required: true,
     },
     users: [String],
+    receipients: [String],
     _createdBy: String,
   },
   {

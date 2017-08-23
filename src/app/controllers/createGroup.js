@@ -8,6 +8,7 @@ const _createGroup = platform => async identifier => {
       throw errors.GROUP_ALREADY_EXISTS;
     }
     group = new Group({ platform, identifier });
+    group.users = [];
     group.save();
   } catch (error) {
     throw error;
