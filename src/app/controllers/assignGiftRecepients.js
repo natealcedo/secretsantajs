@@ -1,11 +1,16 @@
 import { Group } from "app/models";
 import { errors } from "lib";
+import { generateRandomInteger } from "lib/utils";
 
 const _assignGiftReceipients = platform => async identifier => {
   try {
     const group = await Group.findOne({ identifier });
-    console.log(group);
-    group.receipients = nonConflictShuffle(group.users);
+    // if (group.users.length < 4) {
+    //   throw errors.NOT_ENOUGH_PARTICIPANTS;
+    // }
+    const fakeUsers = [111, 222, 333, 444, 555];
+    group.receipients = nonConflictShuffle(fakeUsers);
+    console.log(group.receipients);
     await group.save();
     return group.receipients;
   } catch (error) {
@@ -15,28 +20,20 @@ const _assignGiftReceipients = platform => async identifier => {
 
 const nonConflictShuffle = array => {
   const currentIndex = array.length;
-  const receipients = array.reduce((acc, user) => {
-    console.log(acc);
-    const receipient = getRandomUser(acc, user);
-    return acc.splice(acc.indexOf(receipient), 0);
-  }, array);
-  return receipients;
-};
-
-const getRandomUser = (bucket, userToAvoid) => {
-  const cleanBucket = bucket.filter(user => user !== userToAvoid);
-  if (cleanBucket.length <= 0) {
-    throw new Error("conflict la cb");
-  }
-  const index = getRandomInt(0, cleanBucket.length - 1);
-  return cleanBucket[index];
-};
-
-// source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-const getRandomInt = (min, max) => {
-  const minFloor = Math.ceil(min);
-  const maxFloor = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloor - minFloor)) + minFloor;
+  const receipients = array.reduce((acc, giver) => {
+    const candidates = array.filter(
+      user => acc.concat([giver]).indexOf(user) < 0,
+    );
+    if (candidates.length < 1) {
+      // make array empty if there is end collision
+      return [];
+    }
+    const randomIndex = generateRandomInteger(0, candidates.length - 1);
+    const randomReceipient = candidates[randomIndex];
+    return acc.concat([randomReceipient]);
+  }, []);
+  // recursively regenerate list if array is empty
+  return receipients.length > 0 ? receipients : nonConflictShuffle(array);
 };
 
 export default _assignGiftReceipients;
