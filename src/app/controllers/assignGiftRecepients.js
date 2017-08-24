@@ -5,6 +5,7 @@ import { generateRandomInteger } from "lib/utils";
 const _assignGiftReceipients = platform => async identifier => {
   try {
     const group = await Group.findOne({ identifier });
+    // TODO: remove for production
     // if (group.users.length < 4) {
     //   throw errors.NOT_ENOUGH_PARTICIPANTS;
     // }
