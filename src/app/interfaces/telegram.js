@@ -51,20 +51,13 @@ telegramBot.on("/leave", async message => {
 
 telegramBot.on("/list", async message => {
   try {
-    const userIdList = await controller.getUserList(message.chat.id);
-    const userPromises = await userIdList.map(async userId =>
-      telegramBot.getChatMember(message.chat.id, userId),
-    );
-    const rawUsers = await Promise.all(userPromises);
-    // Send a different message if there are no participants.
-    if (rawUsers.length === 0) {
+    const userIds = await controller.getUserList(message.chat.id);
+    const userNames = await getNamesFromIds(userIds, message.chat.id);
+    if (userNames.length === 0) {
       message.reply.text(NO_PARTICIPANTS);
       return;
     }
-    // Get list of raw users, fetch names and list them.
-    const users = rawUsers.map(value => value.result.user);
-    const fullNames = users.map(user => nameFromObject(user));
-    const namesWithIndex = fullNames.map(
+    const namesWithIndex = userNames.map(
       (name, index) => `\n${index + 1}. ${name}`,
     );
     message.reply.text(
@@ -78,6 +71,31 @@ telegramBot.on("/list", async message => {
 telegramBot.on("/shuffle", async message => {
   try {
     const receipients = await controller.assignGiftRecepients(message.chat.id);
+  } catch (error) {
+    handleError(error, message);
+  }
+});
+
+telegramBot.on("/disperse", async message => {
+  try {
+    // Get chat group title
+    const groupObject = await telegramBot.getChat(message.chat.id);
+    // Get group object from db
+    const group = await controller.getGroup(message.chat.id);
+    const groupName = groupObject.result.title;
+    // Get names from db's group object
+    const receipientNames = await getNamesFromIds(
+      group.receipients,
+      message.chat.id,
+    );
+    const text = RECEIPIENT_REVEAL.replace("$0", groupName);
+    // Blast private messages
+    const promises = group.users.forEach((user, index) => {
+      const receipientName = receipientNames[index];
+      return telegramBot.sendMessage(user, text.replace("$1", receipientName), {
+        parse_mode: "Markdown",
+      });
+    });
   } catch (error) {
     handleError(error, message);
   }
@@ -97,6 +115,20 @@ const handleError = (error, message) => {
   message.reply.text(`ERROR ${error.name}: ${error.message}`);
 };
 
+const getNamesFromIds = async (userIds, groupId) => {
+  if (!groupId) {
+    throw errors.GROUP_DOES_NOT_EXIST; // he attac but he also protec
+  }
+  try {
+    const userPromises = userIds.map(userId => telegramBot.getChatMember(groupId, userId));
+    const rawUsers = await Promise.all(userPromises);
+    const users = rawUsers.map(value => value.result.user);
+    return users.map(nameFromObject);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const nameFromObject = fromObject => {
   if (fromObject.last_name) {
     return `${fromObject.first_name} ${fromObject.last_name}`;
@@ -106,6 +138,7 @@ const nameFromObject = fromObject => {
 
 export default telegramBot;
 
+const RECEIPIENT_REVEAL = "Your secret santa gift receipient from *$0* is *$1*";
 const NO_PARTICIPANTS =
   "No one has joined the secret santa yet! Type /join to participate.";
 const LIST_PARTICIPANTS = "Secret santa participants: $0";
