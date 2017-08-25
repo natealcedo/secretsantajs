@@ -9,9 +9,7 @@ const _assignGiftReceipients = platform => async identifier => {
     // if (group.users.length < 4) {
     //   throw errors.NOT_ENOUGH_PARTICIPANTS;
     // }
-    const fakeUsers = [111, 222, 333, 444, 555];
-    group.receipients = nonConflictShuffle(fakeUsers);
-    console.log(group.receipients);
+    group.receipients = nonConflictShuffle(group.users);
     await group.save();
     return group.receipients;
   } catch (error) {
