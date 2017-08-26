@@ -5,7 +5,7 @@ import { generateRandomInteger } from "lib/utils";
 const _assignGiftReceipients = platform => async identifier => {
   try {
     const group = await Group.findOne({ identifier });
-    // TODO: remove for production
+    // TODO: remove comment for production
     // if (group.users.length < 4) {
     //   throw errors.NOT_ENOUGH_PARTICIPANTS;
     // }
@@ -28,6 +28,7 @@ const nonConflictShuffle = array => {
     }
     const randomIndex = generateRandomInteger(0, candidates.length - 1);
     const randomReceipient = candidates[randomIndex];
+    array.splice(randomIndex, 1);
     return acc.concat([randomReceipient]);
   }, []);
   // recursively regenerate list if array is empty
