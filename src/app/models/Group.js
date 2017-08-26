@@ -15,8 +15,10 @@ export const groupSchema = new Schema(
       type: String,
       required: true,
     },
+    // All stored strings here are user ids
     users: [String],
     receipients: [String],
+    informed: [String],
     _createdBy: String,
   },
   {
