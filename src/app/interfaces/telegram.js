@@ -23,7 +23,7 @@ telegramBot.on("start", () => {
 telegramBot.on("/start", async message => {
   try {
     await controller.createGroup(message.chat.id);
-    message.reply.text(CREATE_GROUP_SUCCESS);
+    await sendMessage(message.chat.id, CREATE_GROUP_SUCCESS);
   } catch (error) {
     handleError(error, message);
   }
@@ -33,7 +33,10 @@ telegramBot.on("/join", async message => {
   try {
     await controller.addUserToGroup(message.from.id, message.chat.id);
     const fullName = nameFromObject(message.from);
-    message.reply.text(JOIN_GROUP_SUCCESS.replace("$0", fullName));
+    await sendMessage(
+      message.chat.id,
+      JOIN_GROUP_SUCCESS.replace("$0", fullName),
+    );
   } catch (error) {
     handleError(error, message);
   }
@@ -43,7 +46,10 @@ telegramBot.on("/leave", async message => {
   try {
     await controller.removeUserFromGroup(message.from.id, message.chat.id);
     const fullName = nameFromObject(message.from);
-    message.reply.text(LEAVE_GROUP_SUCCESS.replace("$0", fullName));
+    await sendMessage(
+      message.chat.id,
+      LEAVE_GROUP_SUCCESS.replace("$0", fullName),
+    );
   } catch (error) {
     handleError(error, message);
   }
@@ -60,7 +66,8 @@ telegramBot.on("/list", async message => {
     const namesWithIndex = userNames.map(
       (name, index) => `\n${index + 1}. ${name}`,
     );
-    message.reply.text(
+    await sendMessage(
+      message.chat.id,
       LIST_PARTICIPANTS.replace("$0", namesWithIndex.join("")),
     );
   } catch (error) {
@@ -71,6 +78,15 @@ telegramBot.on("/list", async message => {
 telegramBot.on("/shuffle", async message => {
   try {
     const receipients = await controller.assignGiftRecepients(message.chat.id);
+  } catch (error) {
+    handleError(error, message);
+  }
+});
+
+telegramBot.on("/test", async message => {
+  console.log(message);
+  try {
+    await sendMessage(message.chat.id, "it works!");
   } catch (error) {
     handleError(error, message);
   }
@@ -90,12 +106,21 @@ telegramBot.on("/disperse", async message => {
     );
     const text = RECEIPIENT_REVEAL.replace("$0", groupName);
     // Blast private messages
-    const promises = group.users.forEach((user, index) => {
+    const promises = group.users.map((user, index) => {
       const receipientName = receipientNames[index];
-      return telegramBot.sendMessage(user, text.replace("$1", receipientName), {
-        parse_mode: "Markdown",
-      });
+      const finalText = text.replace("$1", receipientName);
+      return sendMessage(user, finalText);
     });
+    await Promise.all(promises);
+  } catch (error) {
+    handleError(error, message);
+  }
+});
+
+telegramBot.on("/receipients", async message => {
+  try {
+    const receipients = await controller.getReceipients(message.from.id);
+    console.log(receipients);
   } catch (error) {
     handleError(error, message);
   }
@@ -111,8 +136,18 @@ message-received: ${message.text}
   `);
 });
 
+const sendMessage = (chatId, message) =>
+  telegramBot.sendMessage(chatId, message, { parseMode: "HTML" });
+
 const handleError = (error, message) => {
-  message.reply.text(`ERROR ${error.name}: ${error.message}`);
+  if (!error.name && error.error_code) {
+    sendMessage(
+      message.chat.id,
+      `ERROR ${error.error_code}: ${error.description}`,
+    );
+    return;
+  }
+  sendMessage(message.chat.id, `ERROR ${error.name}: ${error.message}`);
 };
 
 const getNamesFromIds = async (userIds, groupId) => {
@@ -120,7 +155,9 @@ const getNamesFromIds = async (userIds, groupId) => {
     throw errors.GROUP_DOES_NOT_EXIST; // he attac but he also protec
   }
   try {
-    const userPromises = userIds.map(userId => telegramBot.getChatMember(groupId, userId));
+    const userPromises = userIds.map(userId =>
+      telegramBot.getChatMember(groupId, userId),
+    );
     const rawUsers = await Promise.all(userPromises);
     const users = rawUsers.map(value => value.result.user);
     return users.map(nameFromObject);
@@ -130,19 +167,35 @@ const getNamesFromIds = async (userIds, groupId) => {
 };
 
 const nameFromObject = fromObject => {
-  if (fromObject.last_name) {
-    return `${fromObject.first_name} ${fromObject.last_name}`;
+  const nameArray = [];
+  if (fromObject.first_name) {
+    nameArray.push(escapeCharacters(fromObject.first_name));
   }
-  return fromObject.first_name;
+  if (fromObject.last_name) {
+    nameArray.push(escapeCharacters(fromObject.last_name));
+  }
+  if (fromObject.username) {
+    nameArray.push(`</b>(@${fromObject.username})<b>`);
+  }
+  const name = nameArray.join(" ");
+  return name;
 };
+
+const escapeCharacters = string =>
+  string
+    .replace("<", "&lt;")
+    .replace(">", "&gt;")
+    .replace("&", "&amp;")
+    .replace("\"", "&quot;");
 
 export default telegramBot;
 
-const RECEIPIENT_REVEAL = "Your secret santa gift receipient from *$0* is *$1*";
+const RECEIPIENT_REVEAL =
+  "Your secret santa gift receipient from <b>$0</b> is <b>$1</b>.";
 const NO_PARTICIPANTS =
   "No one has joined the secret santa yet! Type /join to participate.";
-const LIST_PARTICIPANTS = "Secret santa participants: $0";
+const LIST_PARTICIPANTS = "<b>Secret santa participants:</b> $0";
 const CREATE_GROUP_SUCCESS =
   "Ho ho ho! A secret santa has been started! Type /join to participate.";
-const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa.";
-const LEAVE_GROUP_SUCCESS = "$0 has left the secret santa.";
+const JOIN_GROUP_SUCCESS = "<b>$0</b> has joined the secret santa.";
+const LEAVE_GROUP_SUCCESS = "<b>$0</b> has left the secret santa.";
