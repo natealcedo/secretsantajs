@@ -66,6 +66,7 @@ telegramBot.on("/list", async message => {
     const namesWithIndex = userNames.map(
       (name, index) => `\n${index + 1}. ${name}`,
     );
+    console.log(namesWithIndex);
     await sendMessage(
       message.chat.id,
       LIST_PARTICIPANTS.replace("$0", namesWithIndex.join("")),
@@ -169,13 +170,13 @@ const getNamesFromIds = async (userIds, groupId) => {
 const nameFromObject = fromObject => {
   const nameArray = [];
   if (fromObject.first_name) {
-    nameArray.push(escapeCharacters(fromObject.first_name));
+    nameArray.push(`<b>${escapeCharacters(fromObject.first_name)}`);
   }
   if (fromObject.last_name) {
-    nameArray.push(escapeCharacters(fromObject.last_name));
+    nameArray.push(`${escapeCharacters(fromObject.last_name)}</b>`);
   }
   if (fromObject.username) {
-    nameArray.push(`</b>(@${fromObject.username})<b>`);
+    nameArray.push(`(@${fromObject.username})`);
   }
   const name = nameArray.join(" ");
   return name;
@@ -190,12 +191,11 @@ const escapeCharacters = string =>
 
 export default telegramBot;
 
-const RECEIPIENT_REVEAL =
-  "Your secret santa gift receipient from <b>$0</b> is <b>$1</b>.";
+const RECEIPIENT_REVEAL = "Your secret santa gift receipient from $0 is $1.";
 const NO_PARTICIPANTS =
   "No one has joined the secret santa yet! Type /join to participate.";
-const LIST_PARTICIPANTS = "<b>Secret santa participants:</b> $0";
+const LIST_PARTICIPANTS = "Secret santa participants: $0";
 const CREATE_GROUP_SUCCESS =
   "Ho ho ho! A secret santa has been started! Type /join to participate.";
-const JOIN_GROUP_SUCCESS = "<b>$0</b> has joined the secret santa.";
-const LEAVE_GROUP_SUCCESS = "<b>$0</b> has left the secret santa.";
+const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa.";
+const LEAVE_GROUP_SUCCESS = "$0 has left the secret santa.";
