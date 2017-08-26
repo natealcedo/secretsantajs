@@ -18,7 +18,6 @@ const _assignGiftReceipients = platform => async identifier => {
 };
 
 const nonConflictShuffle = array => {
-  const currentIndex = array.length;
   const receipients = array.reduce((acc, giver) => {
     const candidates = array.filter(
       user => acc.concat([giver]).indexOf(user) < 0,
