@@ -66,7 +66,6 @@ telegramBot.on("/list", async message => {
     const namesWithIndex = userNames.map(
       (name, index) => `\n${index + 1}. ${name}`,
     );
-    console.log(namesWithIndex);
     await sendMessage(
       message.chat.id,
       LIST_PARTICIPANTS.replace("$0", namesWithIndex.join("")),
@@ -118,9 +117,14 @@ telegramBot.on("/disperse", async message => {
   }
 });
 
-telegramBot.on("/receipients", async message => {
+telegramBot.on("/recipients", async message => {
+  if (message.chat.type !== chatType.PRIVATE) {
+    return;
+  }
   try {
-    const receipients = await controller.getReceipients(message.from.id);
+    const receipients = await controller.getReceipientsFromAllGroupForUser(
+      message.from.id,
+    );
     console.log(receipients);
   } catch (error) {
     handleError(error, message);
@@ -191,6 +195,8 @@ const escapeCharacters = string =>
 
 export default telegramBot;
 
+const TALK_TO_BOT =
+  "Please send me a private message at @HohohohoBot so that I can reveal your gift recipient to you later!";
 const RECEIPIENT_REVEAL = "Your secret santa gift receipient from $0 is $1.";
 const NO_PARTICIPANTS =
   "No one has joined the secret santa yet! Type /join to participate.";
@@ -199,3 +205,9 @@ const CREATE_GROUP_SUCCESS =
   "Ho ho ho! A secret santa has been started! Type /join to participate.";
 const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa.";
 const LEAVE_GROUP_SUCCESS = "$0 has left the secret santa.";
+
+const chatType = {
+  GROUP: "group",
+  PRIVATE: "private",
+  SUPERGROUP: "supergroup",
+};
