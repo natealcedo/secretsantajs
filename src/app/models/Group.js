@@ -16,9 +16,9 @@ export const groupSchema = new Schema(
       required: true,
     },
     // All stored strings here are user ids
-    users: [String],
-    receipients: [String],
-    informed: [String],
+    users: [String], // participants
+    receipients: [String], // generated gift receipients
+    informed: [Boolean], // participants who are informed of their receipients
     _createdBy: String,
   },
   {
