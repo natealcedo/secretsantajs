@@ -1,10 +1,10 @@
 import TeleBot from "telebot";
 import { TELEBOT_CONFIG } from "config";
-import { commandNotFound } from "lib/utils/responses";
-import { telegram as telegramRoutes } from "app/routes";
 import _controller from "app/controllers";
 import { logger } from "lib/utils";
 import { errors } from "lib";
+
+import start from "./start";
 
 // Expose interface/platform to controller
 const INTERFACE = "telegram";
@@ -20,14 +20,7 @@ telegramBot.on("start", () => {
   logger.info("Bot now polling for updates...");
 });
 
-telegramBot.on("/start", async message => {
-  try {
-    await controller.createGroup(message.chat.id);
-    await sendMessage(message.chat.id, CREATE_GROUP_SUCCESS);
-  } catch (error) {
-    handleError(error, message);
-  }
-});
+telegramBot.on("/start", start);
 
 telegramBot.on("/join", async message => {
   try {
