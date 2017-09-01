@@ -12,14 +12,15 @@ const LIST_PARTICIPANTS_AND_SANTAS = "Ho ho ho! Here are your pairings:\n$0";
 const END_GROUP_SUCCESS =
   "$0 has ended the secret santa game. Type /start to start another secret santa game!";
 const HELP_INFO_GROUP = `<b>Here are the available commands:</b>
- /start - starts a secret santa game
- /join - adds you to the secret santa game
- /leave - remove you from the secret santa game
- /list - list all the participants of the secret santa game
- /assign - assign a random gift recipient to all participants
- /reveal - reveals all the secret santas and their gift recipients
- /end - ends the secret santa game
- /info - gives information about the bot`;
+/start - starts a secret santa game
+/join - adds you to the secret santa game
+/leave - remove you from the secret santa game
+/list - list all the participants of the secret santa game
+/assign - assign a random gift recipient to all participants
+/reveal - reveals all the secret santas and their gift recipients
+/end - ends the secret santa game
+/info - gives information about the bot
+/help - lists all the available commands`;
 const BOT_INFO =
   "Secret Santa Bot (secretsantajs) is an open-sourced, multi-platform chat bot for facilitating secret santa games by Liau Jian Jie, Nathaniel Alcedo and Jasper Teo from Singapore.\n\nWebsite: https://example.com\nGitHub: https://github.com/ndaljr/secretsantajs";
 
