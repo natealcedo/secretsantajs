@@ -20,6 +20,8 @@ const HELP_INFO_GROUP = `<b>Here are the available commands:</b>
  /reveal - reveals all the secret santas and their gift recipients
  /end - ends the secret santa game
  /info - gives information about the bot`;
+const BOT_INFO =
+  "Secret Santa Bot (secretsantajs) is an open-sourced, multi-platform chat bot for facilitating secret santa games by Liau Jian Jie, Nathaniel Alcedo and Jasper Teo from Singapore.\n\nWebsite: https://example.com\nGitHub: https://github.com/ndaljr/secretsantajs";
 
 export default {
   TALK_TO_BOT,
@@ -32,4 +34,5 @@ export default {
   LIST_PARTICIPANTS_AND_SANTAS,
   END_GROUP_SUCCESS,
   HELP_INFO_GROUP,
+  BOT_INFO,
 };
