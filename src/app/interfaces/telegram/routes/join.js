@@ -1,5 +1,5 @@
 import { controllerForInterface } from "lib/utils";
-import { responses } from "lib/responses";
+import { responses } from "lib";
 import { handleError, sendMessage, nameFromObject } from "lib/utils/telegram";
 const controller = controllerForInterface("telegram");
 

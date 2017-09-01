@@ -8,6 +8,9 @@ const CREATE_GROUP_SUCCESS =
   "Ho ho ho! A secret santa has been started! Type /join to participate.";
 const JOIN_GROUP_SUCCESS = "$0 has joined the secret santa.";
 const LEAVE_GROUP_SUCCESS = "$0 has left the secret santa.";
+const LIST_PARTICIPANTS_AND_SANTAS = "Ho ho ho! Here are your pairings:\n$0";
+const END_GROUP_SUCCESS =
+  "$0 has ended the secret santa. Type /start to start another secret santa!";
 
 export default {
   TALK_TO_BOT,
@@ -17,4 +20,6 @@ export default {
   CREATE_GROUP_SUCCESS,
   JOIN_GROUP_SUCCESS,
   LEAVE_GROUP_SUCCESS,
+  LIST_PARTICIPANTS_AND_SANTAS,
+  END_GROUP_SUCCESS,
 };

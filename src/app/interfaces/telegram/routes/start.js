@@ -1,6 +1,6 @@
 import { controllerForInterface } from "lib/utils";
-import { sendMessage, handleError } from "lib/utils/telegram";
 import { responses } from "lib";
+import { sendMessage, handleError } from "lib/utils/telegram";
 const controller = controllerForInterface("telegram");
 
 const start = async message => {

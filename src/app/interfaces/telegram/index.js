@@ -1,4 +1,3 @@
-import TeleBot from "telebot";
 import { TELEBOT_CONFIG } from "config";
 import { logger } from "lib/utils";
 import { assign, end, join, leave, list, start, reveal } from "./routes";
@@ -9,6 +8,7 @@ bot.on("/join", join);
 bot.on("/leave", leave);
 bot.on("/list", list);
 bot.on("/assign", assign);
+bot.on("/end", end);
 
 // Sample logging. Add what you think should get logged.
 bot.on("text", message => {
