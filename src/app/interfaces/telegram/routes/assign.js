@@ -1,9 +1,9 @@
 import { controllerForInterface } from "lib/utils";
 import { responses } from "lib";
-import { handleError, sendMessage, getNamesFromIds } from "lib/utils/telegram";
+import { handleError, sendMessage, getNamesFromId } from "lib/utils/telegram";
 import bot from "app/interfaces/telegram";
-const controller = controllerForInterface("telegram");
 
+const controller = controllerForInterface("telegram");
 const assign = async message => {
   try {
     // Get chat group title
@@ -12,7 +12,7 @@ const assign = async message => {
     const group = await controller.getGroup(message.chat.id);
     const groupName = groupObject.result.title;
     // Get names from db's group object
-    const receipientNames = await getNamesFromIds(
+    const receipientNames = await getNamesFromId(
       group.receipients,
       message.chat.id,
     );

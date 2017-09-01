@@ -1,8 +1,8 @@
-import { bot } from "app/interfaces/telegram/bot";
+import bot from "app/interfaces/telegram/bot";
 import { errors } from "lib";
 import { nameFromObject } from "lib/utils/telegram";
 
-const getNamesFromIds = async (userIds, groupId) => {
+const getNamesFromId = async (userIds, groupId) => {
   if (!groupId) {
     throw errors.GROUP_DOES_NOT_EXIST; // he attac but he also protec
   }
@@ -18,4 +18,4 @@ const getNamesFromIds = async (userIds, groupId) => {
   }
 };
 
-export default getNamesFromIds;
+export default getNamesFromId;
