@@ -8,6 +8,7 @@ import getUserList from "./getUserList";
 import removeUserFromGroup from "./removeUserFromGroup";
 import setEndDate from "./setEndDate";
 import userList from "./userList";
+import endGroup from "./endGroup";
 
 export {
   addUserToGroup,
@@ -20,6 +21,7 @@ export {
   removeUserFromGroup,
   // setEndDate,
   // userList,
+  endGroup,
 };
 
 export default {
@@ -33,4 +35,5 @@ export default {
   removeUserFromGroup,
   // setEndDate,
   // userList,
+  endGroup,
 };
