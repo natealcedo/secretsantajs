@@ -1,4 +1,4 @@
-import { sendMessage } from "lib/utils/telegram";
+import sendMessage from "./sendMessage";
 
 const handleError = (error, message) => {
   if (!error.name && error.error_code) {
