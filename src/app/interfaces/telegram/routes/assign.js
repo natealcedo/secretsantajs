@@ -6,6 +6,7 @@ import bot from "app/interfaces/telegram";
 const controller = controllerForInterface("telegram");
 const assign = async message => {
   try {
+    await controller.assignGiftRecipients(message.chat.id);
     // Get chat group title
     const groupObject = await bot.getChat(message.chat.id);
     // Get group object from db
