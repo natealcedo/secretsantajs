@@ -2,23 +2,22 @@ import { Group } from "app/models";
 import { errors } from "lib";
 import { generateRandomInteger } from "lib/utils";
 
-const _assignGiftReceipients = platform => async identifier => {
+const _assignGiftRecipients = platform => async identifier => {
   try {
     const group = await Group.findOne({ platform, identifier, ended: false });
-    // TODO: remove comment for production
-    // if (group.users.length < 4) {
-    //   throw errors.NOT_ENOUGH_PARTICIPANTS;
-    // }
-    group.receipients = nonConflictShuffle(group.users);
+    if (group.users.length < 3) {
+      throw errors.NOT_ENOUGH_PARTICIPANTS;
+    }
+    group.recipients = nonConflictShuffle(group.users);
     await group.save();
-    return group.receipients;
+    return group.recipients;
   } catch (error) {
     throw error;
   }
 };
 
 const nonConflictShuffle = array => {
-  const receipients = array.reduce((acc, giver) => {
+  const recipients = array.reduce((acc, giver, index) => {
     const candidates = array.filter(
       user => acc.concat([giver]).indexOf(user) < 0,
     );
@@ -32,7 +31,7 @@ const nonConflictShuffle = array => {
     return acc.concat([randomReceipient]);
   }, []);
   // recursively regenerate list if array is empty
-  return receipients.length > 0 ? receipients : nonConflictShuffle(array);
+  return recipients.length > 0 ? recipients : nonConflictShuffle(array);
 };
 
-export default _assignGiftReceipients;
+export default _assignGiftRecipients;

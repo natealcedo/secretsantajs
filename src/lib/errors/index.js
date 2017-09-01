@@ -15,7 +15,7 @@ const USER_NOT_IN_GROUP = new Error(
 );
 USER_NOT_IN_GROUP.name = "UserNotInGroup";
 const NOT_ENOUGH_PARTICIPANTS = new Error(
-  "You need at least 4 participants to play secret santa!",
+  "You need at least 3 participants to play secret santa!",
 );
 NOT_ENOUGH_PARTICIPANTS.name = "NotEnoughParticipants";
 

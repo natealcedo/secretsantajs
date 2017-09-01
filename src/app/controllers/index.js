@@ -1,5 +1,5 @@
 import addUserToGroup from "./addUserToGroup";
-import assignGiftRecepients from "./assignGiftRecepients";
+import assignGiftRecipients from "./assignGiftRecipients";
 import createGroup from "./createGroup";
 import endDate from "./endDate";
 import getGroup from "./getGroup";
@@ -12,7 +12,7 @@ import endGroup from "./endGroup";
 
 export {
   addUserToGroup,
-  assignGiftRecepients,
+  assignGiftRecipients,
   createGroup,
   // endDate,
   getGroup,
@@ -26,7 +26,7 @@ export {
 
 export default {
   addUserToGroup,
-  assignGiftRecepients,
+  assignGiftRecipients,
   createGroup,
   // endDate,
   getGroup,
