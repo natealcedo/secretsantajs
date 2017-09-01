@@ -20,7 +20,10 @@ export const groupSchema = new Schema(
     receipients: [String], // generated gift receipients
     informed: [Boolean], // participants who are informed of their receipients
     _createdBy: String,
-    ended: Boolean, // flag for when the game has ended
+    ended: {
+      type: Boolean,
+      default: false,
+    }, // flag for when the game has ended
   },
   {
     timestamps: true,

@@ -3,7 +3,7 @@ import errors from "lib/errors";
 
 const _createGroup = platform => async identifier => {
   try {
-    let group = await Group.findOne({ platform, identifier });
+    let group = await Group.findOne({ platform, identifier, ended: false });
     if (group) {
       throw errors.GROUP_ALREADY_EXISTS;
     }
