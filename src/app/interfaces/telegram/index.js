@@ -1,8 +1,9 @@
 import { TELEBOT_CONFIG } from "config";
 import { logger } from "lib/utils";
-import { assign, end, join, leave, list, start, reveal } from "./routes";
+import { assign, end, help, join, leave, list, start, reveal } from "./routes";
 import bot from "./bot";
 
+bot.on("/help", help);
 bot.on("/start", start);
 bot.on("/join", join);
 bot.on("/leave", leave);
