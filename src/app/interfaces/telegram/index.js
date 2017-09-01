@@ -19,6 +19,7 @@ bot.on("/join", join);
 bot.on("/leave", leave);
 bot.on("/list", list);
 bot.on("/assign", assign);
+bot.on("/reveal", reveal);
 bot.on("/end", end);
 bot.on("/info", info);
 
