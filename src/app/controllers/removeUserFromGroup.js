@@ -3,7 +3,7 @@ import { errors } from "lib";
 
 const _removeUserFromGroup = platform => async (userId, groupId) => {
   try {
-    const group = await Group.findOne({ identifier: groupId });
+    const group = await Group.findOne({ identifier: groupId, ended: false });
     if (!group) {
       throw errors.GROUP_DOES_NOT_EXIST;
     }

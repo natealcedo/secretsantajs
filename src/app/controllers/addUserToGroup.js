@@ -3,7 +3,11 @@ import errors from "lib/errors";
 
 const _addUserToGroup = platform => async (userId, groupId) => {
   try {
-    const group = await Group.findOne({ identifier: groupId });
+    const group = await Group.findOne({
+      platform,
+      identifier: groupId,
+      ended: false,
+    });
     if (!group) {
       throw errors.GROUP_DOES_NOT_EXIST;
     }
