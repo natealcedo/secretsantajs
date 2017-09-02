@@ -1,11 +1,10 @@
 import { controllerForInterface } from "lib/utils";
-import { responses } from "lib";
+import { responses, errors } from "lib";
 import {
   handleError,
   sendMessage,
   getNameFromUser,
   isGroupChat,
-  getIfCanMessageUser,
 } from "lib/utils/telegram";
 const controller = controllerForInterface("telegram");
 
@@ -18,18 +17,9 @@ const join = async message => {
 
     await controller.addUserToGroup(message.from.id, message.chat.id);
     const fullName = getNameFromUser(message.from);
-    const canMessageUser = await getIfCanMessageUser(message.from);
-
-    await sendMessage(
-      message.chat.id,
-      responses.JOIN_GROUP_SUCCESS.replace("$0", fullName),
-    );
-    if (!canMessageUser) {
-      await sendMessage(
-        message.chat.id,
-        responses.TALK_TO_BOT.replace("$0", fullName),
-      );
-    }
+    const text = responses.JOIN_GROUP_SUCCESS.replace("$0", fullName);
+    await sendMessage(message.chat.id, text);
+    await sendMessage(message.from.id, responses.REVEAL_PROMPT);
   } catch (error) {
     handleError(error, message);
   }

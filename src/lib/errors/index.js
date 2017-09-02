@@ -18,6 +18,10 @@ const NOT_ENOUGH_PARTICIPANTS = new Error(
   "You need at least 3 participants to play secret santa!",
 );
 NOT_ENOUGH_PARTICIPANTS.name = "NotEnoughParticipants";
+const USER_HAVE_NOT_TALKED = new Error(
+  "Hey $0, please send me a private message at @HohohohoBot and make sure you haven't blocked me so that I can reveal your gift recipient to you later!",
+);
+USER_HAVE_NOT_TALKED.name = "UserHaveNotTalkedToBot";
 
 const errors = {
   GROUP_ALREADY_EXISTS,
@@ -25,5 +29,6 @@ const errors = {
   USER_ALREADY_IN_GROUP,
   USER_NOT_IN_GROUP,
   NOT_ENOUGH_PARTICIPANTS,
+  USER_HAVE_NOT_TALKED,
 };
 export default errors;

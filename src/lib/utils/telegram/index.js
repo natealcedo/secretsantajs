@@ -1,5 +1,4 @@
 import escapeCharacters from "./escapeCharacters";
-import getIfCanMessageUser from "./getIfCanMessageUser";
 import getNamesFromId from "./getNamesFromId";
 import handleError from "./handleError";
 import getNameFromUser from "./getNameFromUser";
@@ -10,7 +9,6 @@ import getIfUserIsAdmin from "./getIfUserIsAdmin";
 
 export {
   escapeCharacters,
-  getIfCanMessageUser,
   getNamesFromId,
   handleError,
   getNameFromUser,
@@ -22,7 +20,6 @@ export {
 
 export default {
   escapeCharacters,
-  getIfCanMessageUser,
   getNamesFromId,
   handleError,
   getNameFromUser,
