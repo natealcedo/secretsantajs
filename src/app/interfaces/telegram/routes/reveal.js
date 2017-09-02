@@ -1,11 +1,25 @@
 import { controllerForInterface } from "lib/utils";
 import { responses } from "lib";
-import { handleError, sendMessage, getNamesFromId } from "lib/utils/telegram";
+import {
+  handleError,
+  sendMessage,
+  getNamesFromId,
+  isGroupChat,
+  getIfUserIsAdmin,
+} from "lib/utils/telegram";
 import bot from "app/interfaces/telegram";
 
 const controller = controllerForInterface("telegram");
 const reveal = async message => {
   try {
+    // Protect route
+    if (!isGroupChat(message.chat)) {
+      return;
+    }
+    if (!await getIfUserIsAdmin(message.chat, message.user)) {
+      return;
+    }
+
     const group = await controller.getGroup(message.chat.id);
     // Get list from db and build pairing list
     const recipientNames = await getNamesFromId(

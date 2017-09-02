@@ -1,11 +1,25 @@
 import { controllerForInterface } from "lib/utils";
 import { responses } from "lib";
-import { handleError, sendMessage, getNamesFromId } from "lib/utils/telegram";
+import {
+  handleError,
+  sendMessage,
+  getNamesFromId,
+  isGroupChat,
+  getIfUserIsAdmin,
+} from "lib/utils/telegram";
 import bot from "app/interfaces/telegram";
 
 const controller = controllerForInterface("telegram");
 const assign = async message => {
   try {
+    // Protect route
+    if (!isGroupChat(message.chat)) {
+      return;
+    }
+    if (!await getIfUserIsAdmin(message.chat, message.user)) {
+      return;
+    }
+
     await controller.assignGiftRecipients(message.chat.id);
     // Get chat group title
     const groupObject = await bot.getChat(message.chat.id);

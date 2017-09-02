@@ -7,8 +7,20 @@ import leave from "./leave";
 import list from "./list";
 import start from "./start";
 import reveal from "./reveal";
+import updatewishlist from "./updatewishlist";
 
-export { assign, end, help, info, join, leave, list, start, reveal };
+export {
+  assign,
+  end,
+  help,
+  info,
+  join,
+  leave,
+  list,
+  start,
+  reveal,
+  updatewishlist,
+};
 
 export default {
   assign,
@@ -20,4 +32,5 @@ export default {
   list,
   start,
   reveal,
+  updatewishlist,
 };
