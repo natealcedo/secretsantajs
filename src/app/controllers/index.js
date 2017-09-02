@@ -5,7 +5,6 @@ import getGroup from "./getGroup";
 import getRecipients from "./getRecipients";
 import getUserList from "./getUserList";
 import removeUserFromGroup from "./removeUserFromGroup";
-import userList from "./userList";
 import endGroup from "./endGroup";
 import updateWishlist from "./updateWishlist";
 
@@ -17,7 +16,6 @@ export {
   getRecipients,
   getUserList,
   removeUserFromGroup,
-  // userList,
   endGroup,
   updateWishlist,
 };
@@ -30,7 +28,6 @@ export default {
   getRecipients,
   getUserList,
   removeUserFromGroup,
-  // userList,
   endGroup,
   updateWishlist,
 };
