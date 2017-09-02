@@ -16,7 +16,6 @@ const _addUserToGroup = platform => async (userId, groupId) => {
       throw errors.USER_ALREADY_IN_GROUP;
     }
     group.users = group.users.concat([userId]);
-    console.log("ssaving");
     await group.save();
   } catch (error) {
     throw error;
