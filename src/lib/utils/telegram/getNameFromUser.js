@@ -6,7 +6,7 @@ const getNameFromUser = fromObject => {
     nameArray.push(`<b>${escapeCharacters(fromObject.first_name)}</b>`);
   }
   if (fromObject.last_name) {
-    nameArray.push(`<b>$${escapeCharacters(fromObject.last_name)}</b>`);
+    nameArray.push(`<b>${escapeCharacters(fromObject.last_name)}</b>`);
   }
   if (fromObject.username) {
     nameArray.push(`(@${fromObject.username})`);
