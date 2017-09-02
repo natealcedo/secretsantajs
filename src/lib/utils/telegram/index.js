@@ -1,7 +1,8 @@
 import escapeCharacters from "./escapeCharacters";
+import getIfCanMessageUser from "./getIfCanMessageUser";
 import getNamesFromId from "./getNamesFromId";
 import handleError from "./handleError";
-import nameFromObject from "./nameFromObject";
+import getNameFromUser from "./getNameFromUser";
 import sendMessage from "./sendMessage";
 import isGroupChat from "./isGroupChat";
 import isPrivateChat from "./isPrivateChat";
@@ -9,9 +10,10 @@ import getIfUserIsAdmin from "./getIfUserIsAdmin";
 
 export {
   escapeCharacters,
+  getIfCanMessageUser,
   getNamesFromId,
   handleError,
-  nameFromObject,
+  getNameFromUser,
   sendMessage,
   isGroupChat,
   isPrivateChat,
@@ -20,9 +22,10 @@ export {
 
 export default {
   escapeCharacters,
+  getIfCanMessageUser,
   getNamesFromId,
   handleError,
-  nameFromObject,
+  getNameFromUser,
   sendMessage,
   isGroupChat,
   isPrivateChat,

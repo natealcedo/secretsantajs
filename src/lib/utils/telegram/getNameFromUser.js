@@ -1,12 +1,12 @@
 import escapeCharacters from "./escapeCharacters";
 
-const nameFromObject = fromObject => {
+const getNameFromUser = fromObject => {
   const nameArray = [];
   if (fromObject.first_name) {
-    nameArray.push(`<b>${escapeCharacters(fromObject.first_name)}`);
+    nameArray.push(`<b>${escapeCharacters(fromObject.first_name)}</b>`);
   }
   if (fromObject.last_name) {
-    nameArray.push(`${escapeCharacters(fromObject.last_name)}</b>`);
+    nameArray.push(`<b>$${escapeCharacters(fromObject.last_name)}</b>`);
   }
   if (fromObject.username) {
     nameArray.push(`(@${fromObject.username})`);
@@ -15,4 +15,4 @@ const nameFromObject = fromObject => {
   return name;
 };
 
-export default nameFromObject;
+export default getNameFromUser;
