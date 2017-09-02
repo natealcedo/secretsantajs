@@ -1,24 +1,30 @@
-import chatType from "./chatType";
 import escapeCharacters from "./escapeCharacters";
 import getNamesFromId from "./getNamesFromId";
 import handleError from "./handleError";
 import nameFromObject from "./nameFromObject";
 import sendMessage from "./sendMessage";
+import isGroupChat from "./isGroupChat";
+import isPrivateChat from "./isPrivateChat";
+import getIfUserIsAdmin from "./getIfUserIsAdmin";
 
 export {
-  chatType,
   escapeCharacters,
   getNamesFromId,
   handleError,
   nameFromObject,
   sendMessage,
+  isGroupChat,
+  isPrivateChat,
+  getIfUserIsAdmin,
 };
 
 export default {
-  chatType,
   escapeCharacters,
   getNamesFromId,
   handleError,
   nameFromObject,
   sendMessage,
+  isGroupChat,
+  isPrivateChat,
+  getIfUserIsAdmin,
 };
